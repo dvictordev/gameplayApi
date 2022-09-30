@@ -11,26 +11,26 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
-  match Match[]
+  id      String  @id @default(uuid())
+  name    String
+  email   String  @unique
+  Match   Match?  @relation(fields: [matchId], references: [id])
+  matchId String?
 }
 
 model Game {
-  id        String  @id @default(uuid())
+  id        String @id @default(uuid())
   name      String
   bannerUrl String
-  Match     Match[]
 }
 
 model Match {
-  id          String   @id @default(uuid())
-  title       String
+  id          String  @id @default(uuid())
+  game        String
+  banner      String?
+  gameid      String
   description String
-  date        DateTime
+  date        String
   hour        String
-  users       User[]
-  game        Game     @relation(fields: [gameId], references: [id])
-  gameId      String
+  user        User[]
 }
